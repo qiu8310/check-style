@@ -15,6 +15,7 @@ if (!pkgFile) throw new Error('Can\'t found package.json file!');
 
 pkg = require(pkgFile);
 
+_copyRcFiles();
 _addScripts();
 _addDevDependencies();
 
@@ -35,6 +36,18 @@ if (isUpdatedDevDependencies) {
 
 function runTest() {
     cp.spawn('npm', ['test'], {stdio: 'inherit'});
+}
+
+function _copyRcFiles() {
+    var root = path.dirname(pkgFile);
+    ['.jshintrc', '.jscsrc'].forEach(function (file) {
+        var dist = path.join(root, file);
+        var src = path.join(__dirname, '..', file);
+
+        if (!fs.existsSync(dist)) {
+            fs.writeFileSync(dist, fs.readFileSync(src));
+        }
+    });
 }
 
 function _addScripts() {

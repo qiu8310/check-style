@@ -33,10 +33,11 @@ __下文中的 `NA`，意思为 `Not Accept`，即我不认同沪江原文中的
 
     此命令会按以下步骤执行：
 
-    1. 给 `package.json` 中的 `scripts.test` 添加 `jshint **/*.js && jscs **/*.js` 前缀 (如果存在不会重复添加)
-    2. 给 `package.json` 中的 `devDependencies` 添加 `jshint` 和 `jscs` 的依赖
-    3. 如果第二步中有添加成功，则此步会执行 `npm install` 命令来安装这些依赖，否则到下一步
-    4. 执行 `npm test` 命令
+    1. 复制 `check-style` 目录下的 `.jshintrc` 和 `.jscsrc` 文件到你项目的根目录（如果存在，不会覆盖）
+    2. 给 `package.json` 中的 `scripts.test` 添加 `jshint **/*.js && jscs **/*.js` 前缀 (如果存在不会重复添加)
+    3. 给 `package.json` 中的 `devDependencies` 添加 `jshint` 和 `jscs` 的依赖
+    4. 如果上一步有添加成功，则此步会执行 `npm install` 命令来安装这些依赖；否则到下一步
+    5. 执行 `npm test` 命令
 
     所以运行过 `check-style` 后，下次就可以直接使用 `npm test` 即可。
 
