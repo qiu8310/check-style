@@ -1,0 +1,117 @@
+{
+    "validateJSDoc": {
+        "checkParamNames": true,
+        "requireParamTypes": true
+    },
+    "disallowMultipleSpaces": true,
+    "requireCommaBeforeLineBreak": true,
+    "requireSemicolons": true,
+    "requireSpaceBetweenArguments": true,
+    "requireSpacesInConditionalExpression": true,
+    "requireSpacesInForStatement": true,
+    "disallowSpacesInFunctionDeclaration": {
+        "beforeOpeningRoundBrace": true
+    },
+    "requireSpacesInFunction": {
+        "beforeOpeningCurlyBrace": true
+    },
+    "disallowKeywords": [
+        "with",
+        "eval"
+    ],
+    "disallowKeywordsOnNewLine": [
+        "else"
+    ],
+    "disallowTrailingWhitespace": true,
+    "requireLineFeedAtFileEnd": true,
+    "requireCurlyBraces": [
+        "try",
+        "catch"
+    ],
+    "disallowSpaceBeforeBinaryOperators": [
+        ","
+    ],
+    "disallowSpaceAfterBinaryOperators": [
+        "!"
+    ],
+    "requireSpaceBeforeBinaryOperators": [
+        "+",
+        "-",
+        "/",
+        "*",
+        "=",
+        "==",
+        "===",
+        "!=",
+        "!==",
+        ">",
+        ">=",
+        "<",
+        "<="
+    ],
+    "requireSpaceAfterBinaryOperators": [
+        "+",
+        "-",
+        "/",
+        "*",
+        "=",
+        "==",
+        "===",
+        "!=",
+        "!==",
+        ">",
+        ">=",
+        "<",
+        "<="
+    ],
+    "requireSpaceBeforeBlockStatements": true,
+    "requireSpaceAfterKeywords": [
+        "do",
+        "for",
+        "if",
+        "else",
+        "switch",
+        "case",
+        "try",
+        "catch",
+        "finally",
+        "void",
+        "while",
+        "return",
+        "typeof",
+        "function"
+    ],
+    "requireSpaceBeforeKeywords": [
+        "else",
+        "catch",
+        "finally"
+    ],
+    "requireSpaceAfterLineComment": true,
+    "requireSpaceBeforeObjectValues": true,
+    "validateIndentation": 4,
+    "disallowMixedSpacesAndTabs": true,
+    "requireKeywordsOnNewLine": [
+        "if",
+        "while",
+        "do",
+        "for"
+    ],
+    "disallowOperatorBeforeLineBreak": [],
+    "requireOperatorBeforeLineBreak": [
+        ",",
+        "+",
+        "-",
+        "/",
+        "*",
+        "=",
+        "==",
+        "===",
+        "!=",
+        "!==",
+        ">",
+        ">=",
+        "<",
+        "<="
+    ],
+    "requireCapitalizedConstructors": true
+}

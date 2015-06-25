@@ -1,0 +1,34 @@
+#!/usr/bin/env node
+
+if (process.argv.length === 2) {
+    require('../tools/add-check-style-to-scripts');
+} else {
+    var op = require('open');
+    var args = process.argv.slice(2);
+    var cfg = {
+        jshint: {
+            index: 'http://jshint.com/docs/options/',
+            base: 'http://jshint.com/docs/options/#'
+        },
+        jscs: {
+            index: 'http://jscs.info/rules.html',
+            base: 'http://jscs.info/rule/'
+        }
+    };
+
+    var key, param;
+
+    if (Object.keys(cfg).indexOf(args[0]) >= 0) {
+        key = args.shift();
+    }
+    param = args.shift();
+
+    if (!param) {
+        op(cfg[key].index);
+    } else if (!key) {
+        op((/[A-Z]/.test(param) ? cfg.jscs.base : cfg.jshint.base) + param);
+    } else {
+        op(cfg[key].base + param);
+    }
+
+}
