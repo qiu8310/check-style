@@ -10,8 +10,8 @@
  *
  * @type {number}
  */
-var currentStep = 1 + 2 +
-    3;
+var currentStep = 1 + 2
+    + 3;
 
 /**
  * 编码规范测试脚本集

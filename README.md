@@ -15,8 +15,6 @@
 > 也可直接使用工具本身提供的命令行。
 >
 
-__下文中的 `NA`，意思为 `Not Accept`，即我不认同沪江原文中的规范__
-
 ## 使用
 
 1. 先全局安装 `check-style` 工具
@@ -124,7 +122,7 @@ __下文中的 `NA`，意思为 `Not Accept`，即我不认同沪江原文中的
 
 ## 对齐和缩进
 
-- 必须采用 4 个空格，不得使用 TAB __NA:推荐使用 2 个空格，因为 JS 本来回调就多， 4 个占用的空间太多了__
+- 必须采用 4 个空格，不得使用 TAB
 - 未结束的语句在换行后必须多一次缩进
 
 ```json
@@ -136,14 +134,12 @@ __下文中的 `NA`，意思为 `Not Accept`，即我不认同沪江原文中的
 
 - `if`, `do`, `for`, `while` 等关键字前
 - 运算符处换行时，运算符必须在新行的行首
-  __NA:[Operator should before line break][bad_line_break]，
-  JS 会自动插入分号，如果运算符在行首，有可能造成 JS 在上一行的行尾插入分号__
 
 
 ```json
 "requireKeywordsOnNewLine": ["if", "while", "do", "for"]
-"disallowOperatorBeforeLineBreak": [],
-"requireOperatorBeforeLineBreak": [",", "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
+"disallowOperatorBeforeLineBreak": ["+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
+"requireOperatorBeforeLineBreak": [","],
 ```
 
 

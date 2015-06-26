@@ -2,11 +2,12 @@
   "es3": false,
   "es5": false,
   "esnext": false,
-  
+
   "node": true,
   "browser": true,
   "mocha": true,
 
+  "laxbreak": true,
   "bitwise": true,
   "camelcase": false,
   "curly": false,

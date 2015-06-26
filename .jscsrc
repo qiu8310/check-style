@@ -96,9 +96,7 @@
         "do",
         "for"
     ],
-    "disallowOperatorBeforeLineBreak": [],
-    "requireOperatorBeforeLineBreak": [
-        ",",
+    "disallowOperatorBeforeLineBreak": [
         "+",
         "-",
         "/",
@@ -112,6 +110,9 @@
         ">=",
         "<",
         "<="
+    ],
+    "requireOperatorBeforeLineBreak": [
+        ","
     ],
     "requireCapitalizedConstructors": true
 }
