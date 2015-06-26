@@ -1,4 +1,5 @@
 {
+    "esnext": true,
     "validateJSDoc": {
         "checkParamNames": true,
         "requireParamTypes": true
@@ -91,10 +92,8 @@
     "validateIndentation": 4,
     "disallowMixedSpacesAndTabs": true,
     "requireKeywordsOnNewLine": [
-        "if",
         "while",
-        "do",
-        "for"
+        "do"
     ],
     "disallowOperatorBeforeLineBreak": [
         "+",

@@ -1,7 +1,7 @@
 # JavaScript 编码规范
 
 基于 [沪江的 JavaScript编码规范](http://ue.hujiang.com/u/dayu826/article/5366ebbe384a291427bb2c4e)，
-你可以直接应用以下的规范，或者你也可以修改源码中的规范以应用到你自己的项目中。
+你可以直接应用以下的规范，或者你也可以通过 `cs build [init]` 来编译你自己的规范。
 
 > 有代码规范的地方就应该指定 [.jshintrc][jshint_options] 和 [.jscsrc][jscs_rules] 文件。
 >
@@ -11,46 +11,36 @@
 > 注意两者规范不要重复，比如 jshint 和 jscs 都可以检查每行的最大字符长度，我们只要在一个地方检查就
 > 行了，而且原则是以 jshint 为主，jshint 不能做的才用 jscs 去做。
 >
-> 你可以使用 grunt 或 gulp 中的相关 task 对 js 文件处理，
-> 也可直接使用工具本身提供的命令行。
->
 
 ## 使用
 
 1. 先全局安装 `check-style` 工具
 
     ```bash
-    npm --global install check-style
+    npm --global install check-style jshint@^2.8.0 jscs@^1.13.0
     ```
 
-2. 在项目目录下（__项目的根目录需要存在 `package.json` 文件__）运行以下命令：
+    依赖于外部的 `jshint` 和 `jscs` 命令
+
+2. 在项目目录下运行以下命令：
 
     ```bash
-    check-style
+    cs # 或者使用长命令：check-style
     ```
-
-    此命令会按以下步骤执行：
-
-    1. 遍历根目录和根目录的子目录，得到 jsFileLabel 是 `*.js` 还是 `*/*.js` 还是 `*.js */*.js`
-    2. 复制 `check-style` 目录下的 `.jshintrc` 和 `.jscsrc` 文件到你项目的根目录（如果存在，不会覆盖）
-    3. 给 `package.json` 中的 `scripts.test` 添加 `jshint {$jsFileLabel} && jscs {$jsFileLabel}` 前缀 (如果存在不会重复添加)
-    4. 给 `package.json` 中的 `devDependencies` 添加 `jshint` 和 `jscs` 的依赖，如果添加成功执行 `npm install` 命令
-    5. 如果第 1 步中有找到任何的 js 文件，则执行 `npm test` 命令，否则不执行任何操作
-
-    所以运行过 `check-style` 后，下次就可以直接使用 `npm test` 即可。
 
 3. 如果想查看 `.jscsrc` 或 `.jshintrc` 中某个字段的意思，直接运行：
 
     ```bash
-    check-style disallowMultipleSpaces # 会自动判断属性是在 jscs 还是在 jshint 中的
+    cs -m disallowMultipleSpaces # 会自动判断属性是在 jscs 还是在 jshint 中的
     ```
 
     或者
 
     ```bash
-    check-style jscs disallowMultipleSpaces
+    cs --jscs disallowMultipleSpaces
     ```
 
+4. 更多命令用 `cs -h` 查看
 
 
 ## 我推荐的规范
@@ -65,7 +55,7 @@
 - [在比较操作是，将常量放在变量的前面](http://jscs.info/rule/requireYodaConditions)
 
 ```json
-// "esnext": true,
+"esnext": true,
 "validateJSDoc": { "checkParamNames": true, "requireParamTypes": true },
 "disallowMultipleSpaces": true,
 "requireCommaBeforeLineBreak": true,
@@ -137,7 +127,7 @@
 
 
 ```json
-"requireKeywordsOnNewLine": ["if", "while", "do", "for"]
+"requireKeywordsOnNewLine": ["while", "do"],
 "disallowOperatorBeforeLineBreak": ["+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
 "requireOperatorBeforeLineBreak": [","],
 ```

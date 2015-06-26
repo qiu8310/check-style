@@ -8,14 +8,20 @@
 var fs = require('fs'),
     path = require('path');
 
-var README_FILE = path.join(__dirname, '..', 'README.md'),
-    JSON_FILE = path.join(__dirname, '..', '.jscsrc');
+module.exports = function (opts) {
+    opts = opts || {};
 
+    var README_FILE = opts.md || path.join(__dirname, '..', 'README.md'),
+        JSON_FILE = opts.rc || path.join(__dirname, '..', '.jscsrc');
 
-var jsonFromReadme = getJsonDataFromMarkdown(readFile(README_FILE));
-fs.writeFileSync(JSON_FILE, JSON.stringify(jsonFromReadme, null, '    '));
-console.log('Generage ' + path.resolve(JSON_FILE) + ' successfully!');
+    var jsonFromReadme = getJsonDataFromMarkdown(readFile(README_FILE));
+    fs.writeFileSync(JSON_FILE, JSON.stringify(jsonFromReadme, null, '    '));
+    console.log('Generage ' + path.resolve(JSON_FILE) + ' successfully!');
+};
 
+if (process.argv[1] === __filename) {
+    module.exports();
+}
 
 
 /**

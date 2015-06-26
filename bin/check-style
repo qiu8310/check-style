@@ -1,34 +1,95 @@
 #!/usr/bin/env node
 
-if (process.argv.length === 2) {
-    require('../tools/add-check-style-to-scripts');
-} else {
-    var op = require('open');
-    var args = process.argv.slice(2);
-    var cfg = {
-        jshint: {
-            index: 'http://jshint.com/docs/options/',
-            base: 'http://jshint.com/docs/options/#'
-        },
-        jscs: {
-            index: 'http://jscs.info/rules.html',
-            base: 'http://jscs.info/rule/'
+var program = require('commander');
+var op = require('open');
+var pkg = require('../package.json');
+var cs = require('../');
+
+var exclude = [],
+    include = [],
+    collect = function (val, vals) { vals.push(val); return vals; };
+
+program
+    .version(pkg.version)
+    .description('利用 jshint 和 jscs 检查项目下的 JS 文件')
+
+    .option('-e, --exclude <globPatterns>',
+        '要排除的文件的 glob patterns', collect, exclude)
+    .option('-i, --include <globPatterns>',
+        '要包含的文件的 glob patterns', collect, include)
+    .option('-w, --write', '是否要将相关配置文件写入到项目根目录')
+
+    .option('--jscs-config <file>', 'jscs 配置文件')
+    .option('--jshint-config <file>', 'jshint 配置文件')
+
+    .option('-d, --debug', '输出调试信息')
+    .option('-m, --manual <configName>',
+        '打开浏览器查看 jscs 或 jshint 中的某个配置的含义')
+    .option('--jscs [configName]',
+        '打开浏览器查看 jscs 中某个配置的含义，没指定 configName 就跳到 jscs 主页')
+    .option('--jshint [configName]',
+        '打开浏览器查看 jshint 中某个配置的含义，没指定 configName 就跳到 jshint 主页')
+
+program
+    .command('build [init]')
+    // .alias('b')
+    .description('添加 cs.md 或编译 cs.md 到 .jshintrc')
+    .option('--md <markdownFile>', '指定 markdown 源文件，默认取根目录下的 cs.md')
+    .action(function(isInit, self) {
+        var opts = { debug: program.debug, md: self.md };
+        if (isInit) {
+            cs.buildInit(opts);
+            console.log('Init successfully!');
+        } else {
+            cs.build(opts);
         }
-    };
+        process.exit(0);
+    });
 
-    var key, param;
+program
+    .parse(process.argv);
 
-    if (Object.keys(cfg).indexOf(args[0]) >= 0) {
-        key = args.shift();
+
+var cfg = {
+    jshint: {
+        index: 'http://jshint.com/docs/options/',
+        base: 'http://jshint.com/docs/options/#'
+    },
+    jscs: {
+        index: 'http://jscs.info/rules.html',
+        base: 'http://jscs.info/rule/'
     }
-    param = args.shift();
+};
 
-    if (!param) {
-        op(cfg[key].index);
-    } else if (!key) {
-        op((/[A-Z]/.test(param) ? cfg.jscs.base : cfg.jshint.base) + param);
-    } else {
-        op(cfg[key].base + param);
+// 自动判断打开 jscs 还是 jshint 中的配置
+var configName = program.manual;
+if (configName) {
+    op(
+        (/[A-Z]/.test(configName) ? cfg.jscs.base : cfg.jshint.base)
+        + configName
+    );
+}
+
+// 打开 jscs 或 jshint 中的配置
+['jscs', 'jshint'].some(function (key) {
+    configName = program[key];
+    if (configName) {
+        if (true === configName) {
+            op(cfg[key].index);
+        } else {
+            op(cfg[key].base + configName);
+        }
+        return true;
     }
+});
 
+if (!program.manual && !program.jscs && !program.jshint) {
+    cs({
+        exclude: exclude,
+        include: include,
+        write: program.write,
+        debug: program.debug,
+        jscsConfig: program.jscsConfig,
+        jshintConfig: program.jshintConfig
+    });
 }

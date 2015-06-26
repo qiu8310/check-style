@@ -1,7 +1,7 @@
 {
   "es3": false,
   "es5": false,
-  "esnext": false,
+  "esnext": true,
 
   "node": true,
   "browser": true,
