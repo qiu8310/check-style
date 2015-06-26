@@ -7,8 +7,7 @@
 
 var path = require('path'),
     fs = require('fs'),
-    cp = require('child_process');
-
+    spawn = require('cross-spawn');
 
 var pkgFile = up(),
     pkgRoot,
@@ -38,7 +37,7 @@ if (isUpdatedTestScripts || isUpdatedDevDependencies)
 
 
 if (isUpdatedDevDependencies) {
-    var ps = cp.spawn('npm', ['install'], {stdio: 'inherit'});
+    var ps = spawn('npm', ['install'], {stdio: 'inherit'});
     ps.on('close', function (code) {
         if (!code) runTest();
     });
@@ -50,7 +49,7 @@ if (isUpdatedDevDependencies) {
 
 function runTest() {
     if (hasJsFilesInPkgRoot)
-        cp.spawn('npm', ['test'], {stdio: 'inherit'});
+        spawn('npm', ['test'], {stdio: 'inherit'});
     else
         console.log('Not found any js files.');
 }

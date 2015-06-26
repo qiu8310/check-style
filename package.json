@@ -1,35 +1,36 @@
 {
-    "name": "check-style",
-    "version": "1.0.3",
-    "description": "Import jshint and jscs test for your project.",
-    "main": "index.js",
-    "bin": {
-        "check-style": "bin/check-style"
-    },
-    "preferGlobal": true,
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/qiu8310/check-style.git"
-    },
-    "keywords": [
-        "jshint",
-        "jscs",
-        "check-style"
-    ],
-    "author": "Zhonglei Qiu",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/qiu8310/check-style/issues"
-    },
-    "homepage": "https://github.com/qiu8310/check-style#readme",
-    "scripts": {
-        "test": "jshint *.js */*.js && jscs *.js */*.js"
-    },
-    "devDependencies": {
-        "jshint": "^2.8.0",
-        "jscs": "^1.13.0"
-    },
-    "dependencies": {
-        "open": "0.0.5"
-    }
+  "name": "check-style",
+  "version": "1.0.4",
+  "description": "Import jshint and jscs test for your project.",
+  "main": "index.js",
+  "bin": {
+    "check-style": "bin/check-style"
+  },
+  "preferGlobal": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qiu8310/check-style.git"
+  },
+  "keywords": [
+    "jshint",
+    "jscs",
+    "check-style"
+  ],
+  "author": "Zhonglei Qiu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/qiu8310/check-style/issues"
+  },
+  "homepage": "https://github.com/qiu8310/check-style#readme",
+  "scripts": {
+    "test": "jshint *.js */*.js && jscs *.js */*.js"
+  },
+  "devDependencies": {
+    "jshint": "^2.8.0",
+    "jscs": "^1.13.0"
+  },
+  "dependencies": {
+    "cross-spawn": "^0.4.1",
+    "open": "0.0.5"
+  }
 }
