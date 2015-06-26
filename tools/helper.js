@@ -65,21 +65,38 @@ module.exports = {
      * @param {String} cmd
      * @param {Array} [args]
      * @param {Function} [cb]
+     * @param {Object} [spawnOpts]
      */
-    spawn: function (cmd, args, cb) {
+    spawn: function (cmd, args, cb, spawnOpts) {
 
         if (typeof args === 'function') {
+            spawnOpts = cb;
             cb = args;
             args = [];
         }
 
+        if (typeof cb === 'object') {
+            spawnOpts = cb;
+            cb = null;
+        }
+
+        if (!spawnOpts) spawnOpts = { stdio: 'inherit' };
+
         if (!cb) {
-            return spawn(cmd, args, {stdio: 'inherit'});
+            return spawn(cmd, args, spawnOpts);
         } else {
-            var ps = spawn(cmd, args);
+            var ps = spawn(cmd, args, spawnOpts);
             var out = '', err = '';
-            ps.stdout.on('data', function (data) { out += data.toString(); });
-            ps.stderr.on('data', function (data) { err += data.toString(); });
+
+            if (ps.stdout) {
+                ps.stdout.on('data', function (data) {
+                    out += data.toString();
+                });
+                ps.stderr.on('data', function (data) {
+                    err += data.toString();
+                });
+            }
+
             ps.on('close', function (status) { cb(status, out, err); });
         }
     }

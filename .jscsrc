@@ -6,7 +6,6 @@
     },
     "disallowMultipleSpaces": true,
     "requireCommaBeforeLineBreak": true,
-    "requireSemicolons": true,
     "requireSpaceBetweenArguments": true,
     "requireSpacesInConditionalExpression": true,
     "requireSpacesInForStatement": true,

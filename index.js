@@ -82,7 +82,8 @@ module.exports.build = function (opts) {
 
     if (!fs.existsSync(md)) {
         console.error('Not found ' + md + ' file.');
-        return console.error('Please run `cs build init` first!');
+        console.error('Please run `cs build init` first!');
+        process.exit(1);
     }
 
     require('./tools/build-json-from-readme.js')({
@@ -98,24 +99,37 @@ function log() {
 
 function hint(files, options) {
     if (!files.length) {
-        return console.error('No js files!');
+        console.error('No js files!');
+        process.exit(1);
     }
 
     var jshintConfig = options.jshintConfig || path.join(CS_ROOT, '.jshintrc'),
         jscsConfig = options.jscsConfig || path.join(CS_ROOT, '.jscsrc');
 
-    var jshintArgs = ['-c', jshintConfig].concat(files),
-        jscsArgs = ['-c', jscsConfig].concat(files);
+    var verbose = DEBUG ? '--verbose' : [];
+    var jshintReport = [
+        '--reporter',
+        path.join(CS_ROOT, 'node_modules', 'jshint-stylish')
+    ];
+    var jshintArgs = ['-c', jshintConfig].concat(jshintReport, verbose, files),
+        jscsArgs = ['-c', jscsConfig].concat(verbose, files);
 
-    log('Running: jshint ' + jshintArgs.join(' '));
+    var spawnOpts = { stdio: 'inherit' };
 
-    h.spawn('jshint', jshintArgs, function (code, out, err) {
-        if (code === 0) {
-            log('Running: jscs ' + jscsArgs.join(' '));
-            h.spawn('jscs', jscsArgs);
-        } else {
-            console.log(out);
-            console.error(err);
-        }
-    });
+    console.log('Running jshint...');
+    log('jshint ' + jshintArgs.join(' '));
+    h.spawn(
+        'jshint',
+        jshintArgs,
+        function (code) {
+            if (code === 0) {
+                console.log('Running jscs...\n');
+                log('jscs ' + jscsArgs.join(' '));
+                h.spawn('jscs', jscsArgs);
+            } else {
+                process.exit(code);
+            }
+        },
+        spawnOpts
+    );
 }
