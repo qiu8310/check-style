@@ -33,11 +33,11 @@ __下文中的 `NA`，意思为 `Not Accept`，即我不认同沪江原文中的
 
     此命令会按以下步骤执行：
 
-    1. 复制 `check-style` 目录下的 `.jshintrc` 和 `.jscsrc` 文件到你项目的根目录（如果存在，不会覆盖）
-    2. 给 `package.json` 中的 `scripts.test` 添加 `jshint **/*.js && jscs **/*.js` 前缀 (如果存在不会重复添加)
-    3. 给 `package.json` 中的 `devDependencies` 添加 `jshint` 和 `jscs` 的依赖
-    4. 如果上一步有添加成功，则此步会执行 `npm install` 命令来安装这些依赖；否则到下一步
-    5. 执行 `npm test` 命令
+    1. 遍历根目录和根目录的子目录，得到 jsFileLabel 是 `*.js` 还是 `*/*.js` 还是 `*.js */*.js`
+    2. 复制 `check-style` 目录下的 `.jshintrc` 和 `.jscsrc` 文件到你项目的根目录（如果存在，不会覆盖）
+    3. 给 `package.json` 中的 `scripts.test` 添加 `jshint {$jsFileLabel} && jscs {$jsFileLabel}` 前缀 (如果存在不会重复添加)
+    4. 给 `package.json` 中的 `devDependencies` 添加 `jshint` 和 `jscs` 的依赖，如果添加成功执行 `npm install` 命令
+    5. 如果第 1 步中有找到任何的 js 文件，则执行 `npm test` 命令，否则不执行任何操作
 
     所以运行过 `check-style` 后，下次就可以直接使用 `npm test` 即可。
 
@@ -57,7 +57,7 @@ __下文中的 `NA`，意思为 `Not Accept`，即我不认同沪江原文中的
 
 ## 我推荐的规范
 
-- [在语句中不允许连续的多个 空格 或 TAB](http://jscs.info/rule/disallowMultipleSpaces)
+- [在语句中不允许连续的多个 空格 或 TAB（不包括 indent）](http://jscs.info/rule/disallowMultipleSpaces)
 - [逗号不要写在每行的开始位置](http://jscs.info/rule/requireCommaBeforeLineBreak)
 - [语句后面需要写 `;`](http://jscs.info/rule/requireSemicolons)
 - [函数参数之间要使用空格](http://jscs.info/rule/requireSpaceBetweenArguments)

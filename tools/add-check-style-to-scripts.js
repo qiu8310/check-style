@@ -10,10 +10,24 @@ var path = require('path'),
     cp = require('child_process');
 
 
-var pkgFile = up(), pkg, isUpdatedDevDependencies, isUpdatedTestScripts;
+var pkgFile = up(),
+    pkgRoot,
+    pkg,
+    isUpdatedDevDependencies,
+    isUpdatedTestScripts,
+    hasJsFilesInPkgRoot = true,
+    jsFileLabel;
+
 if (!pkgFile) throw new Error('Can\'t found package.json file!');
 
+pkgRoot = path.dirname(pkgFile);
 pkg = require(pkgFile);
+
+jsFileLabel = _detectJsFiles().join(' ');
+if (!jsFileLabel) {
+    hasJsFilesInPkgRoot = false;
+    jsFileLabel = '*.js */*.js';
+}
 
 _copyRcFiles();
 _addScripts();
@@ -35,13 +49,35 @@ if (isUpdatedDevDependencies) {
 
 
 function runTest() {
-    cp.spawn('npm', ['test'], {stdio: 'inherit'});
+    if (hasJsFilesInPkgRoot)
+        cp.spawn('npm', ['test'], {stdio: 'inherit'});
+    else
+        console.log('Not found any js files.');
+}
+
+function _detectJsFiles() {
+
+    var result = [];
+
+    if (hasJsFileInDirectory(pkgRoot)) {
+        result.push('*.js');
+    }
+
+    var hasJsInSubDirectory = fs.readdirSync(pkgRoot).some(function (file) {
+        file = path.join(pkgRoot, file);
+        return fs.statSync(file).isDirectory() && hasJsFileInDirectory(file);
+    });
+
+    if (hasJsInSubDirectory) {
+        result.push('*/*.js');
+    }
+
+    return result;
 }
 
 function _copyRcFiles() {
-    var root = path.dirname(pkgFile);
     ['.jshintrc', '.jscsrc'].forEach(function (file) {
-        var dist = path.join(root, file);
+        var dist = path.join(pkgRoot, file);
         var src = path.join(__dirname, '..', file);
 
         if (!fs.existsSync(dist)) {
@@ -58,12 +94,12 @@ function _addScripts() {
 
     if (testScript.indexOf('jshint') < 0) {
         isUpdatedTestScripts = true;
-        checkStyleScripts.push('jshint *.js */*.js');
+        checkStyleScripts.push('jshint ' + jsFileLabel);
     }
 
     if (testScript.indexOf('jscs') < 0) {
         isUpdatedTestScripts = true;
-        checkStyleScripts.push('jscs *.js */*.js');
+        checkStyleScripts.push('jscs ' + jsFileLabel);
     }
 
     if (testScript) {
@@ -90,6 +126,17 @@ function _addDevDependencies() {
     pkg.devDependencies = dep;
 }
 
+
+/**
+ * 判断一个目录中是否有 JS 文件
+ */
+function hasJsFileInDirectory(dir) {
+    return fs.readdirSync(dir).some(function (file) {
+        if (file === 'node_modules' || file === 'bower_components')
+            return false;
+        return /\.js$/.test(file);
+    });
+}
 
 /**
  * 判断一个文件的使用的 indent

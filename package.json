@@ -1,6 +1,6 @@
 {
     "name": "check-style",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Import jshint and jscs test for your project.",
     "main": "index.js",
     "bin": {
@@ -26,8 +26,8 @@
         "test": "jshint *.js */*.js && jscs *.js */*.js"
     },
     "devDependencies": {
-        "jscs": "^1.13.0",
-        "jshint": "^2.8.0"
+        "jshint": "^2.8.0",
+        "jscs": "^1.13.0"
     },
     "dependencies": {
         "open": "0.0.5"
