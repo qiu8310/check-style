@@ -112,11 +112,11 @@
 
 ## 对齐和缩进
 
-- 必须采用 4 个空格，不得使用 TAB
+- 必须采用 2 个空格，不得使用 TAB
 - 未结束的语句在换行后必须多一次缩进
 
 ```json
-"validateIndentation": 4,
+"validateIndentation": 2,
 "disallowMixedSpacesAndTabs": true,
 ```
 

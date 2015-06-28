@@ -23,7 +23,7 @@
   "trailing": true,
   "smarttabs": true,
   "proto": false,
-  "maxlen": 80,
+  "maxlen": 120,
   "globals": {
     "describe"   : false,
     "it"         : false,
