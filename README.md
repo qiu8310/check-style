@@ -1,7 +1,7 @@
 # JavaScript 编码规范
 
 基于 [沪江的 JavaScript编码规范](http://ue.hujiang.com/u/dayu826/article/5366ebbe384a291427bb2c4e)，
-你可以直接应用以下的规范，或者你也可以通过 `cs build [init]` 来编译你自己的规范。
+你可以直接应用以下的规范，或者你也可以通过 `cs -w` 来配置你自己的规范。
 
 > 有代码规范的地方就应该指定 [.jshintrc][jshint_options] 和 [.jscsrc][jscs_rules] 文件。
 >
@@ -24,9 +24,19 @@
 
 2. 在项目目录下运行以下命令：
 
+    自动检查项目目录下的所有 js 文件
+
     ```bash
-    cs # 或者使用长命令：check-style
+    cs
+    # 或者使用长命令：check-style
     ```
+
+    也可以检查指定的 js 文件
+
+    ```bash
+    cs file1 file2
+    ```
+
 
 3. 如果想查看 `.jscsrc` 或 `.jshintrc` 中某个字段的意思，直接运行：
 
@@ -52,7 +62,6 @@
 - [三元操作符之间要使用空格](http://jscs.info/rule/requireSpacesInConditionalExpression)
 - [for 循环参数中的分号后需要有空格](http://jscs.info/rule/requireSpacesInForStatement)
 - [定义函数时的大括号前需要使用空格](http://jscs.info/rule/requireSpacesInFunction)
-- [在比较操作是，将常量放在变量的前面](http://jscs.info/rule/requireYodaConditions)
 
 ```json
 "esnext": true,
@@ -112,11 +121,11 @@
 
 ## 对齐和缩进
 
-- 必须采用 2 个空格，不得使用 TAB
+- 必须采用 4 个空格，不得使用 TAB
 - 未结束的语句在换行后必须多一次缩进
 
 ```json
-"validateIndentation": 2,
+"validateIndentation": 4,
 "disallowMixedSpacesAndTabs": true,
 ```
 

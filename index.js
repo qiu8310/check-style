@@ -18,7 +18,7 @@ function init(opts) {
 }
 
 function copy(src, dist) {
-    log('Copy ' + src + ' => ' + dist);
+    console.log('Copy ' + src + ' => ' + dist);
     h.copy(src, dist);
 }
 
@@ -36,8 +36,10 @@ module.exports = function (opts) {
                 var pkgFile = path.join(PKG_ROOT, file),
                     csFile = path.join(CS_ROOT, file);
                 if (!fs.existsSync(pkgFile)) copy(csFile, pkgFile);
+                else console.error(file + ' already exists, not copied.');
             });
         }
+        return true;
     }
 
     var ignore = opts.exclude.map(appendExtToDir).concat('node_modules/**'),

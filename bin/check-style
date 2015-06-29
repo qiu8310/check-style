@@ -86,7 +86,7 @@ if (configName) {
 if (!program.manual && !program.jscs && !program.jshint) {
     cs({
         exclude: exclude,
-        include: include,
+        include: program.args.concat(include),
         write: program.write,
         debug: program.debug,
         jscsConfig: program.jscsConfig,

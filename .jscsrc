@@ -88,7 +88,7 @@
     ],
     "requireSpaceAfterLineComment": true,
     "requireSpaceBeforeObjectValues": true,
-    "validateIndentation": 2,
+    "validateIndentation": 4,
     "disallowMixedSpacesAndTabs": true,
     "requireKeywordsOnNewLine": [
         "while",
