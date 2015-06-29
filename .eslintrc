@@ -1,0 +1,37 @@
+{
+  "comma-dangle": "never",
+  "eqeqeq": true,
+  "no-eq-null": false,
+  "no-eval": true,
+  "no-with": true,
+  "no-caller": true,
+  "no-multi-spaces": true,
+  "comma-style": "last",
+  "eol-last": true,
+  "indent": [4, "spaces"],
+  "key-spacing": [2, { "beforeColon": false, "afterColon": true }],
+  "no-mixed-spaces-and-tabs": [2, "smart-tabs"],
+  "no-spaced-func": true,
+  "no-trailing-spaces": [2, { "skipBlankLines": true }],
+  "quotes": [2, "single"],
+  "strict": [2, "never"],
+
+  "ecmaFeatures": {
+    "jsx": true,
+    "modules": true
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+      
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/react-in-jsx-scope": 2
+  },
+  "plugins": [
+    "react"
+  ]
+}

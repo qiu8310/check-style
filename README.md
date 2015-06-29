@@ -17,7 +17,7 @@
 1. 先全局安装 `check-style` 工具
 
     ```bash
-    npm --global install check-style jshint@^2.8.0 jscs@^1.13.0
+    npm --global install check-style jshint@^2.8.0 jscs@^1.13.0 eslint@^0.24.0
     ```
 
     依赖于外部的 `jshint` 和 `jscs` 命令

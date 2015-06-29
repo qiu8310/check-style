@@ -55,6 +55,10 @@ var cfg = {
         index: 'http://jshint.com/docs/options/',
         base: 'http://jshint.com/docs/options/#'
     },
+    eslint: {
+        index: 'http://eslint.org/docs/rules/',
+        base: 'http://eslint.org/docs/rules/'
+    },
     jscs: {
         index: 'http://jscs.info/rules.html',
         base: 'http://jscs.info/rule/'
@@ -62,16 +66,20 @@ var cfg = {
 };
 
 // 自动判断打开 jscs 还是 jshint 中的配置
-var configName = program.manual;
+var configName = program.manual, base;
 if (configName) {
-    op(
-        (/[A-Z]/.test(configName) ? cfg.jscs.base : cfg.jshint.base)
-        + configName
-    );
+    if (/[A-Z]/.test(configName)) {
+        base = cfg.jscs.base;
+    } else if (/\-/.test(configName)) {
+        base = cfg.eslint.base;
+    } else {
+        base = cfg.jshint.base;
+    }
+    op(base + configName);
 }
 
-// 打开 jscs 或 jshint 中的配置
-['jscs', 'jshint'].some(function (key) {
+// 打开 jscs 或 jshint 或 eslint 中的配置
+Object.keys(cfg).some(function (key) {
     configName = program[key];
     if (configName) {
         if (true === configName) {
