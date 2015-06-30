@@ -6,90 +6,92 @@ var pkg = require('../package.json');
 var cs = require('../');
 
 var exclude = [],
-    include = [],
-    collect = function (val, vals) { vals.push(val); return vals; };
-
-program
-    .version(pkg.version)
-    .description('利用 jshint 和 jscs 检查项目下的 JS 文件')
-
-    .option('-e, --exclude <globPatterns>',
-        '要排除的文件的 glob patterns', collect, exclude)
-    .option('-i, --include <globPatterns>',
-        '要包含的文件的 glob patterns', collect, include)
-    .option('-w, --write', '是否要将相关配置文件写入到项目根目录')
-
-    .option('--jscs-config <file>', 'jscs 配置文件')
-    .option('--jshint-config <file>', 'jshint 配置文件')
-
-    .option('-d, --debug', '输出调试信息')
-    .option('-m, --manual <configName>',
-        '打开浏览器查看 jscs 或 jshint 中的某个配置的含义')
-    .option('--jscs [configName]',
-        '打开浏览器查看 jscs 中某个配置的含义，没指定 configName 就跳到 jscs 主页')
-    .option('--jshint [configName]',
-        '打开浏览器查看 jshint 中某个配置的含义，没指定 configName 就跳到 jshint 主页')
-
-program
-    .command('build [init]')
-    // .alias('b')
-    .description('添加 cs.md 或编译 cs.md 到 .jshintrc')
-    .option('--md <markdownFile>', '指定 markdown 源文件，默认取根目录下的 cs.md')
-    .action(function(isInit, self) {
-        var opts = { debug: program.debug, md: self.md };
-        if (isInit) {
-            cs.buildInit(opts);
-            console.log('Init successfully!');
-        } else {
-            cs.build(opts);
-        }
-        process.exit(0);
-    });
-
-program
-    .parse(process.argv);
-
+  include = [],
+  ext = [],
+  collect = function (val, vals) { vals.push(val); return vals; };
 
 var cfg = {
-    jshint: {
-        index: 'http://jshint.com/docs/options/',
-        base: 'http://jshint.com/docs/options/#'
-    },
-    jscs: {
-        index: 'http://jscs.info/rules.html',
-        base: 'http://jscs.info/rule/'
-    }
+  jshint: {
+    index: 'http://jshint.com/docs/options/',
+    base: 'http://jshint.com/docs/options/#'
+  },
+  eslint: {
+    index: 'http://eslint.org/docs/rules/',
+    base: 'http://eslint.org/docs/rules/'
+  },
+  jscs: {
+    index: 'http://jscs.info/rules.html',
+    base: 'http://jscs.info/rule/'
+  }
 };
 
-// 自动判断打开 jscs 还是 jshint 中的配置
-var configName = program.manual;
-if (configName) {
-    op(
-        (/[A-Z]/.test(configName) ? cfg.jscs.base : cfg.jshint.base)
-        + configName
-    );
+function getOptions() {
+  var keys = Object.keys(cfg);
+  var result = {};
+
+  // config and engine
+  keys.forEach(function (key) {
+    var configKey = key + 'Config';
+    if (program[configKey]) result[configKey] = program[configKey];
+
+    if (program[key]) result[key] = program[key];
+  });
+
+  if (program.jsx) result.eslint = true;
+
+  // debug and force
+  result.debug = !!program.debug;
+  result.force = !!program.force;
+
+  // 要处理的文件
+  result.ext = ext;
+  result.exclude = exclude;
+  result.include = program.args.concat(include);
+
+  return result;
 }
 
-// 打开 jscs 或 jshint 中的配置
-['jscs', 'jshint'].some(function (key) {
-    configName = program[key];
-    if (configName) {
-        if (true === configName) {
-            op(cfg[key].index);
-        } else {
-            op(cfg[key].base + configName);
-        }
-        return true;
-    }
-});
+program
+  .version(pkg.version)
+  .usage('[options] [files]')
+  .description('利用 jshint 和 jscs 或 eslint 检查项目下的 JS 文件写法风格')
 
-if (!program.manual && !program.jscs && !program.jshint) {
-    cs({
-        exclude: exclude,
-        include: program.args.concat(include),
-        write: program.write,
-        debug: program.debug,
-        jscsConfig: program.jscsConfig,
-        jshintConfig: program.jshintConfig
-    });
-}
+  .option('-e, --exclude <globPatterns>', '要排除的文件的 glob patterns', collect, exclude)
+  .option('-i, --include <globPatterns>', '要包含的文件的 glob patterns', collect, include)
+
+  .option('--jscs-config <file>', 'jscs 配置文件')
+  .option('--jshint-config <file>', 'jshint 配置文件')
+  .option('--eslint-config <file>', 'eslint 配置文件')
+
+  .option('--jshint', '使用 jshint（如果没有指定，默认使用 jshint 和 jscs ）')
+  .option('--jscs', '使用 jscs')
+  .option('--eslint', '使用 eslint')
+  .option('--jsx', '--eslint 的别名，因为只有 eslint 可以支持 react 的 jsx 语法')
+
+  .option('--ext <extensionName>', '指定要自动查找的文件的后缀名，如果没有指定就默认使用 `js` ', collect, ext)
+  .option('-f, --force', '如果同时使用多个分析引擎，则上一个有报错，下一个就不会执行；如果指定了 force，会强制它往下执行')
+  .option('-d, --debug', '输出调试信息')
+
+program
+  .command('manual <engine> [configName]')
+  .alias('m')
+  .description('打开浏览器查看 jscs 或 jshint 或 eslint 中的某个配置的含义')
+  .action(function (engine, configName) {
+    var opts = cfg[engine];
+    if (!opts) throw new Error('Engine should be one of ' + Object.keys(cfg).join(', '));
+    op(configName ? opts.base + configName : opts.index);
+    process.exit(0);
+  })
+
+program
+  .command('write')
+  .alias('w')
+  .description('将指定的 rc 配置文件写入项目根目录（或当前目录）')
+  .action(function() {
+    cs.write(getOptions());
+    process.exit(0);
+  });
+
+program
+  .parse(process.argv);
+  cs(getOptions());

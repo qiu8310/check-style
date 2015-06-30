@@ -7,6 +7,7 @@
     "disallowMultipleSpaces": true,
     "requireCommaBeforeLineBreak": true,
     "requireSpaceBetweenArguments": true,
+    "validateParameterSeparator": ", ",
     "requireSpacesInConditionalExpression": true,
     "requireSpacesInForStatement": true,
     "disallowSpacesInFunctionDeclaration": {
@@ -88,7 +89,7 @@
     ],
     "requireSpaceAfterLineComment": true,
     "requireSpaceBeforeObjectValues": true,
-    "validateIndentation": 4,
+    "validateIndentation": 2,
     "disallowMixedSpacesAndTabs": true,
     "requireKeywordsOnNewLine": [
         "while",

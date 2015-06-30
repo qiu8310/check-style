@@ -1,59 +1,69 @@
 # JavaScript 编码规范
 
-基于 [沪江的 JavaScript编码规范](http://ue.hujiang.com/u/dayu826/article/5366ebbe384a291427bb2c4e)，
-你可以直接应用以下的规范，或者你也可以通过 `cs -w` 来配置你自己的规范。
+每个人或者每个公司都应该有一个 JavaScript 的编码规范，而且这个规范一般是不会变的，
+我们可以要求每人在项目目录或者个人目录下放上 .jshintrc 或 .jscsrc 或 .eslintrc，
+但你不觉得这样很麻烦吗？
 
-> 有代码规范的地方就应该指定 [.jshintrc][jshint_options] 和 [.jscsrc][jscs_rules] 文件。
->
-> 每个使用此规范的人在提交代码时都需要用 [jshint][jshint] 和 [jscs][jscs] 对代码进行检查，
-> 并修证出现的代码不规范的地方！
->
-> 注意两者规范不要重复，比如 jshint 和 jscs 都可以检查每行的最大字符长度，我们只要在一个地方检查就
-> 行了，而且原则是以 jshint 为主，jshint 不能做的才用 jscs 去做。
->
+
+此工具是基于我的个人编码习惯，同时结合了公司（沪江）里的一些规范，将 [jshint][jshint],
+[jscs][jscs], [eslint][eslint] 三者组装起来的一个工具，它不需要在项目下包含任何的相关
+配置文件，只要运行一下 `check-style` 或缩写 `cs`；就会自动检查 js 文件中不符合规范的地方。
+另外，也可以检查 jsx 文件的编码风格！
+
+
+对于其他想利用此工具的用户：
+
+1. 如果你的编码风格和下面说的一致的话，那么恭喜你，你直接全局安装此工具，直接使用就行。
+2. 如果你的编码风格和下面的不一样，那么建议你 `fork` 此项目，修改其中的规范，
+  然后换个名称发布你的项目，这样你也可以使用你自己风格的此工具了。
+3. 如果你嫌第 2 步太麻烦了，你可以执行 `check-style write` 将配置文件写入你的项目目录，
+  手动修改写入后的配置文件即可
+
+_灵感来自于 [standard](https://github.com/feross/standard)，只是它强制要求你使用它的规范，没有自定义的可能，当然也不支持 jsx 文件_
+
 
 ## 使用
 
 1. 先全局安装 `check-style` 工具
 
     ```bash
-    npm --global install check-style jshint@^2.8.0 jscs@^1.13.0
+    npm --global install check-style
     ```
-
-    依赖于外部的 `jshint` 和 `jscs` 命令
 
 2. 在项目目录下运行以下命令：
 
-    自动检查项目目录下的所有 js 文件
+    __自动检查项目目录下的所有 js 文件__
 
     ```bash
     cs
     # 或者使用长命令：check-style
     ```
 
-    也可以检查指定的 js 文件
+    __也可以检查指定的 js 文件：__
 
     ```bash
     cs file1 file2
     ```
 
-
-3. 如果想查看 `.jscsrc` 或 `.jshintrc` 中某个字段的意思，直接运行：
+    __如果你是 jsx 文件，需要检查它的语法，可以这样用：__
 
     ```bash
-    cs -m disallowMultipleSpaces # 会自动判断属性是在 jscs 还是在 jshint 中的
+    cs --jsx --ext jsx # 假设你的 jsx 文件是以 .jsx 为后缀命名的
     ```
 
-    或者
+
+3. 如果想查看 `.jscsrc` 或 `.jshintrc` 或 `.eslint` 中某个字段的意思，直接运行：
 
     ```bash
-    cs --jscs disallowMultipleSpaces
+    cs manual jscs  disallowMultipleSpaces
     ```
 
 4. 更多命令用 `cs -h` 查看
 
 
-## 我推荐的规范
+## jscs 相关规范
+
+### 我推荐的规范
 
 - [在语句中不允许连续的多个 空格 或 TAB（不包括 indent）](http://jscs.info/rule/disallowMultipleSpaces)
 - [逗号不要写在每行的开始位置](http://jscs.info/rule/requireCommaBeforeLineBreak)
@@ -70,6 +80,7 @@
 "requireCommaBeforeLineBreak": true,
 // "requireSemicolons": true, // jshint 中已经有此判断了
 "requireSpaceBetweenArguments": true,
+"validateParameterSeparator": ", ",
 "requireSpacesInConditionalExpression": true,
 "requireSpacesInForStatement": true,
 "disallowSpacesInFunctionDeclaration": { "beforeOpeningRoundBrace": true },
@@ -82,7 +93,7 @@
 "requireCurlyBraces": ["try", "catch"],
 ```
 
-## 空格
+### 空格
 
 - 除括号外，所有运算符的前后都需要有空格
 - 某些关键字之后需要有空格，包括 `if`, `else`, `try`, `finally` 等
@@ -119,17 +130,17 @@
 "requireSpaceBeforeObjectValues": true,
 ```
 
-## 对齐和缩进
+### 对齐和缩进
 
 - 必须采用 4 个空格，不得使用 TAB
 - 未结束的语句在换行后必须多一次缩进
 
 ```json
-"validateIndentation": 4,
+"validateIndentation": 2,
 "disallowMixedSpacesAndTabs": true,
 ```
 
-## 换行
+### 换行
 
 - `if`, `do`, `for`, `while` 等关键字前
 - 运算符处换行时，运算符必须在新行的行首
@@ -142,7 +153,7 @@
 ```
 
 
-## 命名
+### 命名
 
 - 构造函数首字母大写
 
@@ -152,7 +163,9 @@
 
 
 [jshint]: http://jshint.com/
-[jshint_options]: http://jshint.com/docs/options/
+[jshint_rules]: http://jshint.com/docs/options/
 [jscs]: http://jscs.info/
 [jscs_rules]: http://jscs.info/rules.html
+[eslint]: 'http://eslint.org/'
+[eslint_rules]: 'http://eslint.org/docs/rules/'
 [bad_line_break]: http://stackoverflow.com/questions/15140740/explanation-of-jshints-bad-line-breaking-before-error
