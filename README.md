@@ -1,26 +1,34 @@
 # JavaScript 编码规范
 
-基于 [沪江的 JavaScript编码规范](http://ue.hujiang.com/u/dayu826/article/5366ebbe384a291427bb2c4e)，
-你可以直接应用以下的规范，或者你也可以通过 `cs -w` 来配置你自己的规范。
+每个人或者每个公司都应该有一个 JavaScript 的编码规范，而且这个规范一般是不会变的，
+我们可以要求每人在项目目录或者个人目录下放上 .jshintrc 或 .jscsrc 或 .eslintrc，
+但你不觉得这样很麻烦吗？
 
-> 有代码规范的地方就应该指定 [.jshintrc][jshint_options] 和 [.jscsrc][jscs_rules] 文件。
->
-> 每个使用此规范的人在提交代码时都需要用 [jshint][jshint] 和 [jscs][jscs] 对代码进行检查，
-> 并修证出现的代码不规范的地方！
->
-> 注意两者规范不要重复，比如 jshint 和 jscs 都可以检查每行的最大字符长度，我们只要在一个地方检查就
-> 行了，而且原则是以 jshint 为主，jshint 不能做的才用 jscs 去做。
->
+
+此工具是基于我的个人编码习惯，同时结合了公司（沪江）里的一些规范，将 [jshint][jshint],
+[jscs][jscs], [eslint][eslint] 三者组装起来的一个工具，它不需要在项目下包含任何的相关
+配置文件，只要运行一下 `check-style`；就会自动检查 js 文件中不符合规范的地方。另外，也可
+以检查 jsx 文件的编码风格！
+
+
+对于其他想利用此工具的用户：
+
+1. 如果你的编码风格和下面说的一致的话，那么恭喜你，你直接全局安装此工具，直接使用就行。
+2. 如果你的编码风格和下面的不一样，那么建议你 `fork` 此项目，修改其中的规范，
+  然后换个名称发布你的项目，这样你也可以使用你自己风格的此工具了。
+3. 如果你嫌第 2 步太麻烦了，你可以执行 `check-style write` 将配置文件写入你的项目目录，
+  手动修改写入后的配置文件即可
+
+~灵感来自于 [standard](https://github.com/feross/standard)，只是它强制要求你使用它的规范，没有自定义的可能，当然也不支持 jsx 文件~
+
 
 ## 使用
 
 1. 先全局安装 `check-style` 工具
 
     ```bash
-    npm --global install check-style jshint@^2.8.0 jscs@^1.13.0 eslint@^0.24.0
+    npm --global install check-style
     ```
-
-    依赖于外部的 `jshint` 和 `jscs` 命令
 
 2. 在项目目录下运行以下命令：
 
@@ -37,17 +45,17 @@
     cs file1 file2
     ```
 
-
-3. 如果想查看 `.jscsrc` 或 `.jshintrc` 中某个字段的意思，直接运行：
+    如果你是 jsx 文件，需要检查它的语法
 
     ```bash
-    cs -m disallowMultipleSpaces # 会自动判断属性是在 jscs 还是在 jshint 中的
+    cs --jsx --ext jsx # 假设你的 jsx 文件是以 .jsx 为后缀命名的
     ```
 
-    或者
+
+3. 如果想查看 `.jscsrc` 或 `.jshintrc` 或 `.eslint` 中某个字段的意思，直接运行：
 
     ```bash
-    cs --jscs disallowMultipleSpaces
+    cs manual jscs  disallowMultipleSpaces
     ```
 
 4. 更多命令用 `cs -h` 查看
@@ -125,7 +133,7 @@
 - 未结束的语句在换行后必须多一次缩进
 
 ```json
-"validateIndentation": 4,
+"validateIndentation": 2,
 "disallowMixedSpacesAndTabs": true,
 ```
 
@@ -152,7 +160,9 @@
 
 
 [jshint]: http://jshint.com/
-[jshint_options]: http://jshint.com/docs/options/
+[jshint_rules]: http://jshint.com/docs/options/
 [jscs]: http://jscs.info/
 [jscs_rules]: http://jscs.info/rules.html
+[eslint]: 'http://eslint.org/',
+[eslint_rules]: 'http://eslint.org/docs/rules/'
 [bad_line_break]: http://stackoverflow.com/questions/15140740/explanation-of-jshints-bad-line-breaking-before-error

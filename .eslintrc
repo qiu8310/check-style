@@ -1,36 +1,62 @@
 {
-  "comma-dangle": "never",
-  "eqeqeq": true,
-  "no-eq-null": false,
-  "no-eval": true,
-  "no-with": true,
-  "no-caller": true,
-  "no-multi-spaces": true,
-  "comma-style": "last",
-  "eol-last": true,
-  "indent": [4, "spaces"],
-  "key-spacing": [2, { "beforeColon": false, "afterColon": true }],
-  "no-mixed-spaces-and-tabs": [2, "smart-tabs"],
-  "no-spaced-func": true,
-  "no-trailing-spaces": [2, { "skipBlankLines": true }],
-  "quotes": [2, "single"],
-  "strict": [2, "never"],
-
+  "parser": "babel-eslint",
   "ecmaFeatures": {
     "jsx": true,
-    "modules": true
+    "modules": true,
+    "arrowFunctions": true,
+    "binaryLiterals": true,
+    "blockBindings": true,
+    "classes": true,
+    "defaultParams": true,
+    "destructuring": true,
+    "forOf": true,
+    "generators": true,
+    "modules": true,
+    "objectLiteralComputedProperties": true,
+    "objectLiteralDuplicateProperties": true,
+    "objectLiteralShorthandMethods": true,
+    "objectLiteralShorthandProperties": true,
+    "octalLiterals": true,
+    "regexUFlag": true,
+    "regexYFlag": true,
+    "restParams": true,
+    "spread": true,
+    "superInFunctions": true,
+    "templateStrings": true,
+    "unicodeCodePointEscapes": true,
+    "globalReturn": true
   },
+
   "env": {
     "browser": true,
     "node": true
   },
-  "parser": "babel-eslint",
+
   "rules": {
-      
+    "no-shadow": [0],
+    "indent": [2, 2],
+    "curly": [2, "multi"],
+    "strict": [2, "never"],
+    "comma-dangle": [2, "never"],
+    "eqeqeq": [2, "smart"],
+    "no-multi-spaces": [2],
+    "comma-style": [2, "last"],
+    "eol-last": [2],
+    "no-spaced-func": [2],
+    "space-after-keywords": [2, "always"],
+    "key-spacing": [2, { "beforeColon": false, "afterColon": true }],
+    "no-mixed-spaces-and-tabs": [2, "smart-tabs"],
+    "no-trailing-spaces": [2, { "skipBlankLines": true }],
+    "quotes": [2, "single"],
+    "strict": [2, "never"],
+    "no-unused-vars": [2, {"vars": "all", "args": "after-used"}],
+    
+
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
     "react/react-in-jsx-scope": 2
   },
+
   "plugins": [
     "react"
   ]

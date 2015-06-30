@@ -6,21 +6,21 @@
  */
 
 var fs = require('fs'),
-    path = require('path');
+  path = require('path');
 
 module.exports = function (opts) {
-    opts = opts || {};
+  opts = opts || {};
 
-    var README_FILE = opts.md || path.join(__dirname, '..', 'README.md'),
-        JSON_FILE = opts.rc || path.join(__dirname, '..', '.jscsrc');
+  var README_FILE = opts.md || path.join(__dirname, '..', 'README.md'),
+    JSON_FILE = opts.rc || path.join(__dirname, '..', '.jscsrc');
 
-    var jsonFromReadme = getJsonDataFromMarkdown(readFile(README_FILE));
-    fs.writeFileSync(JSON_FILE, JSON.stringify(jsonFromReadme, null, '    '));
-    console.log('Generage ' + path.resolve(JSON_FILE) + ' successfully!');
+  var jsonFromReadme = getJsonDataFromMarkdown(readFile(README_FILE));
+  fs.writeFileSync(JSON_FILE, JSON.stringify(jsonFromReadme, null, '    '));
+  console.log('Generage ' + path.resolve(JSON_FILE) + ' successfully!');
 };
 
 if (process.argv[1] === __filename) {
-    module.exports();
+  module.exports();
 }
 
 
@@ -32,8 +32,8 @@ if (process.argv[1] === __filename) {
  * @returns {Object|String}
  */
 function readFile(filePath, ifReturnJson) {
-    var content = fs.readFileSync(filePath).toString();
-    return ifReturnJson ? JSON.parse(content) : content;
+  var content = fs.readFileSync(filePath).toString();
+  return ifReturnJson ? JSON.parse(content) : content;
 }
 
 /**
@@ -44,50 +44,50 @@ function readFile(filePath, ifReturnJson) {
  */
 function getJsonDataFromMarkdown(content) {
 
-    var result = [];
+  var result = [];
 
-    var isLineDefine = function (line) {
-        return /^\s*"[\w-]+"\s*:\s*/.test(line);
-    };
+  var isLineDefine = function (line) {
+    return /^\s*"[\w-]+"\s*:\s*/.test(line);
+  };
 
-    var addCommaToLine = function (line) {
-        return line.replace(/,?\s*$/, ',');
-    };
+  var addCommaToLine = function (line) {
+    return line.replace(/,?\s*$/, ',');
+  };
 
-    content.replace(/^```json\s([\s\S]+?)\s```/gm, function (all, code) {
-        // 去掉 code 中的注释行
-        code = code.replace(/^\/\/.*$/mg, '');
+  content.replace(/^```json\s([\s\S]+?)\s```/gm, function (all, code) {
+    // 去掉 code 中的注释行
+    code = code.replace(/^\/\/.*$/mg, '');
 
-        // 给没加逗号的行补充逗号
-        var lastLine, lines = code.split(/[\r]?\n/);
+    // 给没加逗号的行补充逗号
+    var lastLine, lines = code.split(/[\r]?\n/);
 
-        lines.forEach(function (line, index) {
-            line = line.trim();
-            if (!line) return ;
+    lines.forEach(function (line, index) {
+      line = line.trim();
+      if (!line) return ;
 
-            // 当前行是一个新的定义，上一非空行就需要以逗号结尾
-            if (isLineDefine(line) && lastLine) {
-                lastLine = addCommaToLine(lastLine);
-            }
+      // 当前行是一个新的定义，上一非空行就需要以逗号结尾
+      if (isLineDefine(line) && lastLine) {
+        lastLine = addCommaToLine(lastLine);
+      }
 
-            if (lastLine) { result.push(lastLine); }
-            lastLine = line;
-        });
-
-        if (lastLine) { result.push(lastLine); }
+      if (lastLine) { result.push(lastLine); }
+      lastLine = line;
     });
 
+    if (lastLine) { result.push(lastLine); }
+  });
 
-    // 去掉 result 中的最后一行的逗号
-    var len = result.length;
-    if (len) result[len - 1] = result[len - 1].replace(/,\s*$/, '');
 
-    result = '{' + result.join('\n') + '}';
+  // 去掉 result 中的最后一行的逗号
+  var len = result.length;
+  if (len) result[len - 1] = result[len - 1].replace(/,\s*$/, '');
 
-    try {
-        return JSON.parse(result);
-    } catch (e) {
-        console.log(result);
-        console.log(e.stack);
-    }
+  result = '{' + result.join('\n') + '}';
+
+  try {
+    return JSON.parse(result);
+  } catch (e) {
+    console.log(result);
+    console.log(e.stack);
+  }
 }
