@@ -166,6 +166,6 @@ _灵感来自于 [standard](https://github.com/feross/standard)，只是它强�
 [jshint_rules]: http://jshint.com/docs/options/
 [jscs]: http://jscs.info/
 [jscs_rules]: http://jscs.info/rules.html
-[eslint]: 'http://eslint.org/'
-[eslint_rules]: 'http://eslint.org/docs/rules/'
+[eslint]: http://eslint.org/
+[eslint_rules]: http://eslint.org/docs/rules/
 [bad_line_break]: http://stackoverflow.com/questions/15140740/explanation-of-jshints-bad-line-breaking-before-error
