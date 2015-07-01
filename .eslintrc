@@ -31,11 +31,13 @@
     "browser": true,
     "node": true
   },
-
+  globals: {
+    "__DEBUG__": false
+  },
   "rules": {
     "no-shadow": [0],
     "indent": [2, 2],
-    "curly": [2, "multi"],
+    "curly": [0, "multi-line"],
     "strict": [2, "never"],
     "comma-dangle": [2, "never"],
     "eqeqeq": [2, "smart"],

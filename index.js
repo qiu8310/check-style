@@ -57,8 +57,8 @@ function write(opts) {
       var src = path.resolve(opts[k + 'Config']),
         dist = path.resolve(path.join(PKG_ROOT, '.' + k + 'rc'));
 
-      if (src === dist) console.error('目标文件和源文件地址一样（' + src + '）');
-      else if (fs.existsSync(dist)) console.error('目标文件已经存在（' + dist + '），请删除后再重试');
+      if (fs.existsSync(dist)) console.error('目标文件已经存在（' + dist + '）');
+      else if (src === dist) console.error('目标文件和源文件地址一样（' + src + '）');
       else copy(src, dist);
     }
   });
