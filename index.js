@@ -102,7 +102,7 @@ function hint(files, opts) {
 
   var tasks = [];
 
-  function getBinFile(key) { return path.join(CS_ROOT, 'node_modules', '.bin', key); }
+  function getBinFile(key) { return path.join(CS_ROOT, 'node_modules', key, 'bin', key); }
 
   var verbose = DEBUG ? ['--verbose'] : [];
   var jshintReporter = ['--reporter', path.join(CS_ROOT, 'node_modules', 'jshint-stylish')];
