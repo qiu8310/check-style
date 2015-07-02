@@ -132,7 +132,7 @@ _灵感来自于 [standard](https://github.com/feross/standard)，只是它强�
 
 ### 对齐和缩进
 
-- 必须采用 2 个空格，不得使用 TAB
+- 必须采用 4 个空格，不得使用 TAB
 - 未结束的语句在换行后必须多一次缩进
 
 ```json
