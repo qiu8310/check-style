@@ -115,12 +115,13 @@ function hint(files, opts) {
   ENGINES.forEach(function (key) {
     if (opts[key]) {
       tasks.push(function (done) {
-        console.log('Running ' + key + '...');
+        console.log('\r\nRunning ' + key + '...');
         var args = [getBinFile(key)].concat(injectArgs[key]);
         args.push('--config', opts[key + 'Config']);
         args.push.apply(args, files);
         log('node ' + args.join(' '));
         h.spawn('node', args, function (code) {
+          if (code === 0 && key === 'eslint') console.log('No code style errors found.');
           if (code !== 0 && !opts.force) done(code);
           else done(null, code);
         });
