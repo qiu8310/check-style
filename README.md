@@ -136,7 +136,7 @@ _灵感来自于 [standard](https://github.com/feross/standard)，只是它强�
 - 未结束的语句在换行后必须多一次缩进
 
 ```json
-"validateIndentation": 2,
+"validateIndentation": 4,
 "disallowMixedSpacesAndTabs": true,
 ```
 

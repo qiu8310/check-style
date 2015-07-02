@@ -36,7 +36,7 @@
   },
   "rules": {
     "no-shadow": [0],
-    "indent": [2, 2],
+    "indent": 2,
     "curly": [0, "multi-line"],
     "strict": [2, "never"],
     "comma-dangle": [2, "never"],
@@ -52,7 +52,7 @@
     "quotes": [2, "single"],
     "strict": [2, "never"],
     "no-unused-vars": [2, {"vars": "all", "args": "after-used"}],
-    
+
 
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
