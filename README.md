@@ -5,7 +5,7 @@
 但你不觉得这样很麻烦吗？
 
 
-此工具是基于我的个人编码习惯，同时结合了公司（沪江）里的一些规范，将 [jshint][jshint],
+此工具是基于沪江里的一些规范，将 [jshint][jshint],
 [jscs][jscs], [eslint][eslint] 三者组装起来的一个工具，它不需要在项目下包含任何的相关
 配置文件，只要运行一下 `check-style` 或缩写 `cs`；就会自动检查 js 文件中不符合规范的地方。
 另外，也可以检查 jsx 文件的编码风格！
@@ -16,8 +16,6 @@
 1. 如果你的编码风格和下面说的一致的话，那么恭喜你，你直接全局安装此工具，直接使用就行。
 2. 如果你的编码风格和下面的不一样，那么建议你 `fork` 此项目，修改其中的规范，
   然后换个名称发布你的项目，这样你也可以使用你自己风格的此工具了。
-3. 如果你嫌第 2 步太麻烦了，你可以执行 `check-style write` 将配置文件写入你的项目目录，
-  手动修改写入后的配置文件即可
 
 _灵感来自于 [standard](https://github.com/feross/standard)，只是它强制要求你使用它的规范，没有自定义的可能，当然也不支持 jsx 文件_
 
@@ -63,7 +61,7 @@ _灵感来自于 [standard](https://github.com/feross/standard)，只是它强�
 
 ## jscs 相关规范
 
-### 我推荐的规范
+### 推荐的规范
 
 - [在语句中不允许连续的多个 空格 或 TAB（不包括 indent）](http://jscs.info/rule/disallowMultipleSpaces)
 - [逗号不要写在每行的开始位置](http://jscs.info/rule/requireCommaBeforeLineBreak)
