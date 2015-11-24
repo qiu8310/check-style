@@ -3,27 +3,44 @@
 var program = require('commander');
 var op = require('open');
 var pkg = require('../package.json');
-var cs = require('../');
+
+var cfg = {
+  jshint: {
+    alias: 'hint',
+    config: '.jshintrc',
+    extensions: ['js'], // 当没有指定使用的 lint 引擎时，就自动根据此后缀来判断是否应该使用此引擎
+    index: 'http://jshint.com/docs/options/',
+    specify: 'http://jshint.com/docs/options/#[name]'
+  },
+  eslint: {
+    alias: 'jsx',
+    config: '.eslintrc',
+    extensions: ['jsx'],
+    outputSuccess: true,  // 原生的命令没有错误时不会有任何输出，这里需要统一输出一个成功消息
+    index: 'http://eslint.org/docs/rules/',
+    specify: 'http://eslint.org/docs/rules/[name]'
+  },
+  jscs: {
+    config: '.jscsrc',
+    extensions: ['js'],
+    index: 'http://jscs.info/rules.html',
+    specify: 'http://jscs.info/rule/[name]'
+  },
+  sasslint: {
+    bin: 'sass-lint',
+    alias: 'sass',
+    extensions: ['scss', 'sass'],
+    config: '.sass-lint.yml',
+    outputSuccess: true,
+    index: 'https://github.com/sasstools/sass-lint/tree/develop/lib/rules',
+    specify: 'https://github.com/sasstools/sass-lint/blob/develop/lib/rules/[name].js'
+  }
+};
 
 var exclude = [],
   include = [],
   ext = [],
   collect = function (val, vals) { vals.push(val); return vals; };
-
-var cfg = {
-  jshint: {
-    index: 'http://jshint.com/docs/options/',
-    base: 'http://jshint.com/docs/options/#'
-  },
-  eslint: {
-    index: 'http://eslint.org/docs/rules/',
-    base: 'http://eslint.org/docs/rules/'
-  },
-  jscs: {
-    index: 'http://jscs.info/rules.html',
-    base: 'http://jscs.info/rule/'
-  }
-};
 
 function getOptions() {
   var keys = Object.keys(cfg);
@@ -37,8 +54,6 @@ function getOptions() {
     if (program[key]) result[key] = program[key];
   });
 
-  if (program.jsx) result.eslint = true;
-
   // debug and force
   result.debug = !!program.debug;
   result.force = !!program.force;
@@ -50,38 +65,57 @@ function getOptions() {
 
   return result;
 }
+function mapConfigFile(key) {
+  return '--' + key + '-config';
+}
+function mapConfigLint(key) {
+  return (key.length === 1 ? '-' : '--') + key;
+}
 
 program
   .version(pkg.version)
   .usage('[options] [files]')
-  .description('利用 jshint 和 jscs 或 eslint 检查项目下的 JS 文件写法风格')
+  .description('利用 jshint、jscs、eslint 和 sasslint 检查项目下的源文件写法风格')
 
   .option('-e, --exclude <globPatterns>', '要排除的文件的 glob patterns', collect, exclude)
   .option('-i, --include <globPatterns>', '要包含的文件的 glob patterns', collect, include)
+  .option('--ext <extensionName>', '指定要自动查找的文件的后缀名', collect, ext)
+  .option('-f, --force', '即使有错误出现，也强制程序往下执行')
+  .option('-d, --debug', '输出调试信息');
 
-  .option('--jscs-config <file>', 'jscs 配置文件')
-  .option('--jshint-config <file>', 'jshint 配置文件')
-  .option('--eslint-config <file>', 'eslint 配置文件')
 
-  .option('--jshint', '使用 jshint（如果没有指定，默认使用 jshint 和 jscs ）')
-  .option('--jscs', '使用 jscs')
-  .option('--eslint', '使用 eslint')
-  .option('--jsx', '--eslint 的别名，因为只有 eslint 可以支持 react 的 jsx 语法')
+Object.keys(cfg).forEach(function (key) {
+  var opt = cfg[key];
+  opt.alias = [].concat(opt.alias || []);
+  opt.keys = opt.alias.concat(key);
 
-  .option('--ext <extensionName>', '指定要自动查找的文件的后缀名，如果没有指定就默认使用 `js` ', collect, ext)
-  .option('-f, --force', '如果同时使用多个分析引擎，则上一个有报错，下一个就不会执行；如果指定了 force，会强制它往下执行')
-  .option('-d, --debug', '输出调试信息')
+  var configFileOpts = cfg[key].keys.map(mapConfigFile).join(', ');
+  program.option(configFileOpts + ' <file>', key + ' 配置文件');
+});
+
+Object.keys(cfg).forEach(function (key) {
+  var lintOpts = cfg[key].keys.map(mapConfigLint).join(', ');
+  program.option(lintOpts, '使用 ' + key);
+});
+
+var cs = require('../')(cfg);
 
 program
   .command('manual <engine> [configName]')
   .alias('m')
   .description('打开浏览器查看 jscs 或 jshint 或 eslint 中的某个配置的含义')
   .action(function (engine, configName) {
+    if (!cfg[engine]) {
+      Object.keys(cfg).some(function (key) {
+        if (cfg[key].keys.indexOf(engine) >= 0) { engine = key; return true; }
+      });
+    }
+
     var opts = cfg[engine];
     if (!opts) throw new Error('Engine should be one of ' + Object.keys(cfg).join(', '));
-    op(configName ? opts.base + configName : opts.index);
+    op(configName ? opts.specify.replace('[name]', configName) : opts.index);
     process.exit(0);
-  })
+  });
 
 program
   .command('write')
@@ -92,6 +126,11 @@ program
     process.exit(0);
   });
 
-program
-  .parse(process.argv);
-  cs(getOptions());
+program.parse(process.argv);
+getOptions()
+cs.lint(getOptions());
+
+
+
+
+
