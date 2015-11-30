@@ -17,7 +17,7 @@ var cfg = {
     alias: 'jsx',
     config: '.eslintrc',
     extensions: ['jsx'],
-    outputSuccess: true,  // 原生的命令没有错误时不会有任何输出，这里需要统一输出一个成功消息
+    outputSuccess: true, // 原生的命令没有错误时不会有任何输出，这里需要统一输出一个成功消息
     index: 'http://eslint.org/docs/rules/',
     specify: 'http://eslint.org/docs/rules/[name]'
   },
@@ -38,7 +38,7 @@ var cfg = {
   },
   csscomb: {
     alias: 'comb',
-    autoRun: false,  // 默认是不运行的，只有指定了才会运行
+    autoRun: false, // 默认是不运行的，只有指定了才会运行
     extensions: ['css', 'scss', 'sass', 'less'],
     config: 'csscomb.json',
     index: 'https://github.com/csscomb/csscomb.js/blob/master/doc/configuration.md',
