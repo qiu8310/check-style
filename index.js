@@ -109,12 +109,17 @@ function lintFiles(files, opts) {
     jshint: verbose.concat(jshintReporter),
     jscs: verbose,
     eslint: [],
-    sasslint: ['--verbose'] // 总是 verbose
+    sasslint: ['--verbose'], // 总是 verbose
+    csscomb: ['--verbose']
   };
 
   Object.keys(CONFIG).forEach(function (key) {
     if (opts[key] || opts.auto) {
 
+      // 阻止不自动运行的命令
+      if (opts.auto && CONFIG[key].autoRun === false) return false;
+
+      // 有对应的文件才运行
       var filtered = opts.auto ? filterFiles(files, key) : files;
       if (!filtered.length) return false;
 

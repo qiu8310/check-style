@@ -30,6 +30,7 @@
     "babel-eslint": "^3.1.20",
     "commander": "^2.8.1",
     "cross-spawn": "^0.4.1",
+    "csscomb": "^3.1.8",
     "eslint": "^0.24.0",
     "eslint-plugin-react": "^2.6.3",
     "fs-extra": "^0.20.1",
