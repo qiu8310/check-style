@@ -28,6 +28,7 @@
   "sort-order": [
 
     "display",
+    "content",
     "position",
     "top",
     "right",
@@ -154,7 +155,6 @@
     "border-spacing",
     "box-shadow",
     "caption-side",
-    "content",
     "cursor",
     "empty-cells",
     "opacity",

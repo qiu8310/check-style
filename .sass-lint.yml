@@ -69,6 +69,7 @@ rules:
       order:
         # Box
         - 'display'
+        - 'content'
         - 'position'
         - 'top'
         - 'right'
@@ -203,7 +204,6 @@ rules:
         - 'border-spacing'
         - 'box-shadow'
         - 'caption-side'
-        - 'content'
         - 'cursor'
         - 'empty-cells'
         - 'opacity'
