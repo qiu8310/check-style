@@ -79,9 +79,6 @@
     "column-count",
     "column-width",
 
-    "transform",
-    "transition",
-
     "border",
     "border-top",
     "border-right",
@@ -126,6 +123,7 @@
 
 
     "color",
+    "opacity",
 
     "font",
     "font-family",
@@ -148,23 +146,9 @@
     "text-transform",
     "text-wrap",
 
-    "white-space",
-    "word-spacing",
-
-    "border-collapse",
-    "border-spacing",
-    "box-shadow",
-    "caption-side",
     "cursor",
-    "empty-cells",
-    "opacity",
     "overflow",
-    "quotes",
-    "speak",
-    "table-layout",
-    "vertical-align",
     "visibility",
     "z-index"
-
   ]
 }

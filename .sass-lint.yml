@@ -120,9 +120,6 @@ rules:
         - 'column-count'
         - 'column-width'
 
-        - 'transform'
-        - 'transition'
-
         # Border
 
         - 'border'
@@ -173,6 +170,7 @@ rules:
         # Text
 
         - 'color'
+        - 'opacity'
 
         - 'font'
         - 'font-family'
@@ -195,23 +193,11 @@ rules:
         - 'text-transform'
         - 'text-wrap'
 
-        - 'white-space'
-        - 'word-spacing'
 
         # Other
 
-        - 'border-collapse'
-        - 'border-spacing'
-        - 'box-shadow'
-        - 'caption-side'
         - 'cursor'
-        - 'empty-cells'
-        - 'opacity'
         - 'overflow'
-        - 'quotes'
-        - 'speak'
-        - 'table-layout'
-        - 'vertical-align'
         - 'visibility'
         - 'z-index'
 
