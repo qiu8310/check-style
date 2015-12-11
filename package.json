@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/qiu8310/check-style#readme",
   "scripts": {
+    "order": "node tools/update_cssorder",
     "lint": "node bin/check-style --jshint --jscs index.js bin/* lib/*"
   },
   "devDependencies": {},
