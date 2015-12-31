@@ -32,7 +32,9 @@
     "node": true
   },
   "globals": {
-    "__DEBUG__": false
+    "__DEBUG__"  : false,
+    "__PROD__"   : false,
+    "__DEV__"    : false
   },
   "rules": {
     "no-alert": 0,

@@ -1,6 +1,6 @@
 {
   "name": "check-style",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Import jshint and jscs test for your project.",
   "main": "index.js",
   "bin": {

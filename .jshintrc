@@ -26,6 +26,9 @@
   "proto": false,
   "maxlen": 120,
   "globals": {
+    "__DEBUG__"  : false,
+    "__PROD__"   : false,
+    "__DEV__"    : false,
     "describe"   : false,
     "it"         : false,
     "before"     : false,
