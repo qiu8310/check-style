@@ -28,12 +28,6 @@
   "globals": {
     "__DEBUG__"  : false,
     "__PROD__"   : false,
-    "__DEV__"    : false,
-    "describe"   : false,
-    "it"         : false,
-    "before"     : false,
-    "beforeEach" : false,
-    "after"      : false,
-    "afterEach"  : false
+    "__DEV__"    : false
   }
 }
