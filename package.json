@@ -34,7 +34,7 @@
     "commander": "^2.8.1",
     "cross-spawn": "^0.4.1",
     "csscomb": "^3.1.8",
-    "eslint": "^0.24.0",
+    "eslint": "^1.9.0",
     "eslint-plugin-react": "^2.6.3",
     "fs-extra": "^0.29.0",
     "glob": "^5.0.10",
